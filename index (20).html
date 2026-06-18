@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polideportivos Sociales · Mesas Deportivas</title>
+
+<!--
+  ┌──────────────────────────────────────────────────────────────┐
+  │  PORTAL DE COORDINADORES · Mesas Deportivas Barriales          │
+  │  Secretaría de Fortalecimiento Vecinal y Deportes · Córdoba    │
+  │                                                                │
+  │  CÓMO EDITARLO: todo lo que tenés que tocar está en el bloque  │
+  │  CONFIG, abajo de todo (antes de </body>). Ahí cargás:         │
+  │   · el link de la carpeta de Drive de cada poli                │
+  │   · los links de los formularios, capacitaciones y documentos  │
+  │   · la fecha de la firma                                       │
+  │                                                                │
+  │  LOGO: para usar el logo real, subí "logo.png" a este mismo    │
+  │  repo y descomentá la línea <img> en el encabezado.            │
+  │                                                                │
+  │  PUBLICAR: subí este archivo como "index.html" a un repo de    │
+  │  GitHub → Settings → Pages → Branch: main → Save. En un        │
+  │  minuto tenés la URL para mandar por WhatsApp.                 │
+  └──────────────────────────────────────────────────────────────┘
+-->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700&display=swap');
+
+  :root{
+    --azul:#16447E;
+    --bordo:#A4123F;
+    --amber:#F2A81D;
+    --celeste:#32A1D7;
+    --ink:#243246;
+    --mut:#6B7280;
+    --ln:#E7E9EE;
+    --bg:#ECEEF1;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  body{
+    font-family:'Maven Pro',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-text-size-adjust:100%;
+  }
+
+  .app{max-width:480px;margin:0 auto;background:#fff;min-height:100vh}
+
+  /* ---------- Encabezado ---------- */
+  .hd{position:relative;overflow:hidden;background:var(--azul);padding:18px 18px;display:flex;align-items:center;gap:12px}
+  .hd .acc1{position:absolute;top:-26px;right:-30px;width:110px;height:34px;background:var(--amber);border-radius:24px;transform:rotate(40deg)}
+  .hd .acc2{position:absolute;top:16px;right:-34px;width:84px;height:26px;background:var(--bordo);border-radius:24px;transform:rotate(40deg);opacity:.9}
+  .hd .mark{position:relative;flex-shrink:0}
+  .hd .wm{position:relative}
+  .hd .wm .t1{font-size:17px;font-weight:700;color:#fff;line-height:1.15}
+  .hd .wm .t2{font-size:12px;font-weight:400;color:rgba(255,255,255,.82);margin-top:1px}
+
+  /* ---------- Estructura ---------- */
+  .wrap{padding:18px 16px 8px;display:flex;flex-direction:column;gap:22px}
+  .bt{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+  .bt h2{font-size:16px;font-weight:700;color:var(--azul)}
+  .bt .bar{height:3px;width:24px;border-radius:2px}
+
+  /* ---------- Novedades ---------- */
+  .nov{display:flex;flex-direction:column;gap:10px}
+  .ncard{padding:11px 13px;border-radius:0 8px 8px 0}
+  .ncard .nh{display:flex;align-items:center;gap:7px;margin-bottom:3px;font-size:12px;font-weight:600}
+  .ncard p{font-size:13.5px;color:var(--ink)}
+  .nfirma{background:rgba(50,161,215,.09);border-left:3px solid var(--celeste)}
+  .nfirma .nh{color:var(--azul)}
+  .ninfo{background:rgba(242,168,29,.13);border-left:3px solid var(--amber)}
+  .ninfo .nh{color:#8A5E00}
+  .ncard a{color:inherit;font-weight:600;text-decoration:underline}
+
+  /* ---------- Tu poli (elemento principal) ---------- */
+  .poli{border:1.5px solid var(--celeste);border-radius:14px;padding:16px 15px;background:#fff}
+  .poli .lead{font-size:13.5px;color:var(--mut);margin-bottom:12px}
+  label.lbl{display:block;font-size:12px;font-weight:600;color:var(--azul);margin-bottom:6px}
+  select{
+    width:100%;font-family:inherit;font-size:16px;color:var(--ink);
+    padding:13px 12px;border:1.5px solid var(--ln);border-radius:10px;
+    background:#fff;appearance:none;-webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2316447E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat;background-position:right 12px center;
+  }
+  select:focus-visible{outline:none;border-color:var(--celeste);box-shadow:0 0 0 3px rgba(50,161,215,.25)}
+  .go{
+    width:100%;margin-top:11px;font-family:inherit;font-size:15px;font-weight:600;
+    color:#fff;background:var(--azul);border:none;border-radius:10px;
+    padding:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+    transition:opacity .15s,background .15s;
+  }
+  .go:disabled{background:#A9B4C2;cursor:not-allowed}
+  .go:not(:disabled):active{background:#10355f}
+  .go:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .hint{margin-top:10px;font-size:12.5px;color:var(--mut);min-height:1px}
+  .hint.warn{color:var(--bordo);font-weight:500}
+
+  /* ---------- Botones de acceso ---------- */
+  .links{display:flex;flex-direction:column;gap:10px}
+  .lnk{
+    display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--ln);
+    border-radius:12px;background:#fff;text-decoration:none;color:inherit;cursor:pointer;
+    transition:background .15s,border-color .15s;
+  }
+  .lnk:active{background:#F5F8FC}
+  .lnk:focus-visible{outline:3px solid var(--celeste);outline-offset:2px}
+  .lnk .ic{width:38px;height:38px;border-radius:10px;background:rgba(50,161,215,.13);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .lnk .tx{flex:1}
+  .lnk .tx b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+  .lnk .tx span{font-size:12px;color:var(--mut)}
+  .lnk .chev{flex-shrink:0;opacity:.55}
+
+  /* ---------- Pie ---------- */
+  .urlbar{display:flex;align-items:center;gap:8px;background:#F4F6F9;border-radius:10px;padding:11px 13px;margin:14px 16px}
+  .urlbar span{font-size:12px;color:var(--mut)}
+  .tricolor{display:flex;height:6px}
+  .tricolor i{flex:1}
+  .foot{text-align:center;font-size:11.5px;color:var(--mut);padding:14px 16px 22px}
+
+  svg.i{display:block}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ENCABEZADO -->
+  <header class="hd">
+    <span class="acc1"></span><span class="acc2"></span>
+
+    <!-- Para usar el logo real: borrá el <svg> de abajo y descomentá esta línea (subí logo.png al repo)
+    <img class="mark" src="logo.png" alt="Secretaría de Fortalecimiento Vecinal y Deportes" width="38" height="38"> -->
+    <svg class="mark i" width="38" height="38" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M6 4 L6 19 Q6 27 14 27 L18 27 Q26 27 26 19 L26 4" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+      <rect x="12" y="18" width="2.4" height="6" rx="1" fill="#32A1D7"/>
+      <rect x="15" y="18" width="2.4" height="6" rx="1" fill="#A4123F"/>
+      <rect x="18" y="18" width="2.4" height="6" rx="1" fill="#F2A81D"/>
+    </svg>
+
+    <div class="wm">
+      <div class="t1">Polideportivos sociales</div>
+      <div class="t2">Secretaría de Fortalecimiento Vecinal y Deportes</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- NOVEDADES -->
+    <section>
+      <div class="bt"><h2>Novedades</h2><span class="bar" style="background:var(--bordo)"></span></div>
+      <div class="nov">
+        <div class="ncard nfirma">
+          <div class="nh">
+            <svg class="i" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <span>Firma de acuerdos</span>
+          </div>
+          <p id="nov-firma">Próxima firma de acuerdos en la Secretaría. Traé la documentación de tu institución.</p>
+        </div>
+        <div class="ncard ninfo">
+          <div class="nh">
+            <svg class="i" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+            <span>Informe de resultados 2025</span>
+          </div>
+          <p>70 mesas · 347 instituciones · 116 acuerdos. <a id="nov-informe" href="#" target="_blank" rel="noopener">Leer el informe</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TU POLI (elemento principal) -->
+    <section>
+      <div class="bt"><h2>Tu poli</h2><span class="bar" style="background:var(--celeste)"></span></div>
+      <div class="poli">
+        <p class="lead">Elegí tu polideportivo y entrá a la carpeta con tus acuerdos de uso firmados.</p>
+        <label class="lbl" for="poli-select">Polideportivo</label>
+        <select id="poli-select" aria-describedby="poli-hint">
+          <option value="" selected>Elegí tu poli…</option>
+        </select>
+        <button class="go" id="poli-go" type="button" disabled>
+          <svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span id="poli-go-label">Abrir mis acuerdos</span>
+        </button>
+        <p class="hint" id="poli-hint"></p>
+      </div>
+    </section>
+
+    <!-- MÁS ACCESOS -->
+    <section>
+      <div class="bt"><h2>Más accesos</h2><span class="bar" style="background:var(--amber)"></span></div>
+      <div class="links">
+        <a class="lnk" id="lnk-solicitud" href="#" target="_blank" rel="noopener">
+          <span class="ic"><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16447E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></span>
+          <span class="tx"><b>Solicitar un acuerdo</b><span>Formulario para una nueva actividad</span></span>
+          <svg class="chev i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a class="lnk" id="lnk-acta" href="#" target="_blank" rel="noopener">
+          <span class="ic"><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16447E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+          <span class="tx"><b>Cargar un acta de reunión</b><span>Subí el acta de tu mesa</span></span>
+          <svg class="chev i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a class="lnk" id="lnk-capas" href="#" target="_blank" rel="noopener">
+          <span class="ic"><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16447E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></span>
+          <span class="tx"><b>Capacitaciones</b><span>Materiales y grabaciones</span></span>
+          <svg class="chev i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a class="lnk" id="lnk-docs" href="#" target="_blank" rel="noopener">
+          <span class="ic"><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16447E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>
+          <span class="tx"><b>Documentos</b><span>Mesas territoriales y materiales de apoyo</span></span>
+          <svg class="chev i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="urlbar">
+    <svg class="i" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+    <span>Guardá esta página en la pantalla de inicio de tu celular.</span>
+  </div>
+
+  <div class="tricolor"><i style="background:var(--azul)"></i><i style="background:var(--bordo)"></i><i style="background:var(--amber)"></i><i style="background:var(--celeste)"></i></div>
+  <p class="foot">Dirección de Vinculación · Secretaría de Fortalecimiento Vecinal y Deportes · Municipalidad de Córdoba</p>
+
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   CONFIG — ESTO ES LO ÚNICO QUE TENÉS QUE EDITAR
+   ════════════════════════════════════════════════════════════════ */
+
+/* 1) Texto de la novedad de la firma */
+const FIRMA = "Próxima firma de acuerdos: jueves 26/6, 10 hs en la Secretaría. Traé la documentación de tu institución.";
+
+/* 2) Links de los formularios, capacitaciones, documentos e informe.
+      Pegá entre comillas el link de cada uno. Si lo dejás vacío "", el
+      botón avisa que todavía no está cargado. */
+const LINKS = {
+  informe:    "",   // PDF del informe de resultados 2025
+  solicitud:  "",   // Google Form: solicitar un acuerdo de uso
+  acta:       "",   // Google Form: cargar un acta de reunión
+  capas:      "",   // Carpeta de Drive: capacitaciones
+  docs:       ""    // Carpeta de Drive: documentos / mesas territoriales
+};
+
+/* 3) Los polis del piloto. Pegá el link de la carpeta de Drive de cada uno
+      entre las comillas de "url". Los que queden con "" todavía sin link,
+      el portal los marca como "pendiente" y avisa al coordinador. */
+const POLIS = [
+  { n:"12 de Julio",            url:"" },
+  { n:"23 de Abril",            url:"" },
+  { n:"Ampliación Ferreyra",    url:"" },
+  { n:"Benjamín Cabral",        url:"" },
+  { n:"Cáceres",                url:"" },
+  { n:"Campo de la Ribera",     url:"" },
+  { n:"Colonia Lola",           url:"" },
+  { n:"Cooperativa La Unidad",  url:"" },
+  { n:"Deán Funes",             url:"" },
+  { n:"El Chingolo",            url:"" },
+  { n:"Guiñazú",                url:"" },
+  { n:"Héroes de Malvinas",     url:"" },
+  { n:"IPV Argüello",           url:"" },
+  { n:"Juan Pablo II",          url:"" },
+  { n:"La Tela",                url:"" },
+  { n:"Los Gigantes",           url:"" },
+  { n:"Marcos Sastre",          url:"" },
+  { n:"Mirizzi",                url:"" },
+  { n:"Nuevo Progreso",         url:"" },
+  { n:"Obispo Angelelli",       url:"" },
+  { n:"Oña",                    url:"" },
+  { n:"Panamericano",           url:"" },
+  { n:"Parque República",       url:"" },
+  { n:"Policial Anexo",         url:"" },
+  { n:"Primero de Mayo",        url:"" },
+  { n:"Villa Aspacia",          url:"" },
+  { n:"Villa El Libertador",    url:"" },
+  { n:"Villa Retiro",           url:"" },
+  { n:"Zepa B",                 url:"" }
+];
+
+/* ════════════════════════════════════════════════════════════════
+   De acá para abajo no hace falta tocar nada.
+   ════════════════════════════════════════════════════════════════ */
+
+document.getElementById("nov-firma").textContent = FIRMA;
+
+// Novedad informe + botones de acceso
+function setLink(id, url){
+  const el = document.getElementById(id);
+  if(url){ el.href = url; }
+  else{
+    el.addEventListener("click", function(e){
+      e.preventDefault();
+      alert("Este enlace todavía no está cargado. Avisá a la Dirección de Vinculación.");
+    });
+  }
+}
+setLink("nov-informe", LINKS.informe);
+setLink("lnk-solicitud", LINKS.solicitud);
+setLink("lnk-acta", LINKS.acta);
+setLink("lnk-capas", LINKS.capas);
+setLink("lnk-docs", LINKS.docs);
+
+// Armar el desplegable de polis
+const sel = document.getElementById("poli-select");
+POLIS.forEach(function(p, i){
+  const o = document.createElement("option");
+  o.value = String(i);
+  o.textContent = p.url ? p.n : p.n + " (pendiente)";
+  sel.appendChild(o);
+});
+
+const goBtn = document.getElementById("poli-go");
+const goLbl = document.getElementById("poli-go-label");
+const hint  = document.getElementById("poli-hint");
+
+sel.addEventListener("change", function(){
+  hint.textContent = ""; hint.classList.remove("warn");
+  if(sel.value === ""){
+    goBtn.disabled = true; goLbl.textContent = "Abrir mis acuerdos"; return;
+  }
+  const p = POLIS[Number(sel.value)];
+  if(p.url){
+    goBtn.disabled = false;
+    goLbl.textContent = "Abrir acuerdos de " + p.n;
+  } else {
+    goBtn.disabled = true;
+    goLbl.textContent = "Abrir mis acuerdos";
+    hint.textContent = "La carpeta de " + p.n + " todavía no está disponible. Avisá a la Dirección de Vinculación.";
+    hint.classList.add("warn");
+  }
+});
+
+goBtn.addEventListener("click", function(){
+  if(sel.value === "") return;
+  const p = POLIS[Number(sel.value)];
+  if(p.url) window.open(p.url, "_blank", "noopener");
+});
+</script>
+</body>
+</html>
